@@ -1,6 +1,6 @@
 ---
 title: "Lab 09 - Grading the professor, Pt. 1"
-author: "Insert your name here"
+author: "Ryan Wheat"
 date: "Insert date here"
 output: github_document
 ---
@@ -15,12 +15,23 @@ library(openintro)
 
 ### Exercise 1
 
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+This distribution looks negatively skewed. This indicates that students generally give positive course evaluations, creating a bit of ceiling effect. This is what I expected to see: if professors are getting hired at UT Austin, chances are that they're decent at their job. However, just based on probabilities, chances are good that a few of them aren't so great at teaching...
+
+```{r visualize-skew}
+
+ggplot(data = evals, mapping = aes(x = score)) + geom_histogram(color = "grey", fill = "darkorange4") + labs(x = "Course Evaluation Score", y = "Count", title = "Course Evaluation Ratings at UT Austin") + theme_bw()
+
+```
+
 
 ### Exercise 2
+
+```{r score-bty_avg}
+
+ggplot(data = evals, mapping = aes(x = bty_avg, y = score)) + geom_point() + geom_smooth(color = "black")
+
+```
+
 
 ...
 
