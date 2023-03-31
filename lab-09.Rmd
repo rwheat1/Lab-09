@@ -81,6 +81,66 @@ R2 = .035
 
 ### Exercise 9
 
+score = gender(.14) + 4.09
+
+Slope Interpretation: male professors receive course evaluations that, on average, are .14 units higher than female professors.
+
+Intercept: the average female professor receives a course evaluation of 4.09.
+
+```{r m_gen}
+
+m_gen = lm(score ~ gender, data = evals)
+summary(m_gen)
+
+```
+
+
+### Exercise 10
+
+Male Professor Equation: score = 4.23 
+Female Professor Equation: score = 4.09
+
+### Exercise 11
+
+score = tenuretrack(-.12) + tenured(-.14) + 4.28
+
+Slope Interpretations: Tenure track professors, on average, receive a course evaluation of 4.15; tenured professors receive an average evaluation of 4.13.
+
+Intercept: Teaching professors, on average, receive a course evaluation of 4.28.
+
+
+```{r m_rank}
+
+m_rank = lm(score ~ rank, data = evals)
+summary(m_rank)
+
+```
+
+### Exercise 12
+
+```{r relevel}
+
+evals <- evals %>% 
+  mutate(rank_relevel = relevel(evals$rank, ref = "tenure track"))
+
+```
+
+### Exercise 13
+
+score = teaching(.13) + tenured(-.02) + 4.15
+
+Intercept Interpretation: tenure track faculty receive, on average, a course evaluation score of 4.15
+
+Slope Interpretations: teaching professors receive an average course evaluation .13 points higher (4.28) than tenure track faculty do, and tenured faculty receive course evaluations -.02 points lower than tenure track profs.
+
+```{r rank_relevel}
+
+m_rank_relevel = lm(score ~ rank_relevel, data = evals)
+summary(m_rank_relevel)
+
+```
+
+
 ...
 
 Add exercise headings as needed.
