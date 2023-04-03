@@ -251,11 +251,97 @@ summary(m_rank)
 ### Exercise 12
 
 ``` r
-evals <- evals %>%
-  mutate(rank_relevel = relevel(evals$rank, ref = "teaching"))
+evals <- evals %>% 
+  mutate(rank_relevel = relevel(evals$rank, ref = "tenure track"))
 ```
 
 ### Exercise 13
+
+score = teaching(.13) + tenured(-.02) + 4.15
+
+Intercept Interpretation: tenure track faculty receive, on average, a
+course evaluation score of 4.15
+
+Slope Interpretations: teaching professors receive an average course
+evaluation .13 points higher (4.28) than tenure track faculty do, and
+tenured faculty receive course evaluations -.02 points lower than tenure
+track profs.
+
+R2 = .01
+
+1% of the variance in course evaluation ratings is explained by rank
+
+``` r
+m_rank_relevel = lm(score ~ rank_relevel, data = evals)
+summary(m_rank_relevel)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = score ~ rank_relevel, data = evals)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -1.8546 -0.3391  0.1157  0.4305  0.8609 
+    ## 
+    ## Coefficients:
+    ##                      Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)           4.15463    0.05214  79.680   <2e-16 ***
+    ## rank_relevelteaching  0.12968    0.07482   1.733   0.0837 .  
+    ## rank_releveltenured  -0.01550    0.06228  -0.249   0.8036    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 0.5419 on 460 degrees of freedom
+    ## Multiple R-squared:  0.01163,    Adjusted R-squared:  0.007332 
+    ## F-statistic: 2.706 on 2 and 460 DF,  p-value: 0.06786
+
+### Exercise 14
+
+``` r
+evals <- evals %>%
+  mutate(tenure_eligible = case_when(rank == "tenured" ~ "yes", rank == "tenure track" ~ "yes", rank == "teaching" ~ "no"))
+```
+
+### Exercise 15
+
+score = tenure_eligible(-.14) + 4.28
+
+Intercept Interpretation: Faculty that are not tenure eligible receive
+an average course evaluation of 4.28
+
+Slope Interpretation: Faculty that are tenure eligible receive an
+average course evaluation to be .14 points lower (4.14) than those who
+are not.
+
+R2: .01
+
+1% of the variance in course evaluation scores is explained by whether
+the professor was tenure eligible or not.
+
+``` r
+m_tenure_eligible = lm(score ~ tenure_eligible, data = evals)
+summary(m_tenure_eligible)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = score ~ tenure_eligible, data = evals)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -1.8438 -0.3438  0.1157  0.4360  0.8562 
+    ## 
+    ## Coefficients:
+    ##                    Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)          4.2843     0.0536  79.934   <2e-16 ***
+    ## tenure_eligibleyes  -0.1406     0.0607  -2.315    0.021 *  
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 0.5413 on 461 degrees of freedom
+    ## Multiple R-squared:  0.0115, Adjusted R-squared:  0.009352 
+    ## F-statistic: 5.361 on 1 and 461 DF,  p-value: 0.02103
 
 …
 
